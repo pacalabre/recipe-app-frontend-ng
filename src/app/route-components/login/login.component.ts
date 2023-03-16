@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,10 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 })
 export class LoginComponent {
   currentUser: any;
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UsersService
+  ) {}
 
   onLoginSubmit(form: NgForm) {
     const user = {
@@ -19,6 +23,9 @@ export class LoginComponent {
     this.authService.login(user).subscribe((response: any) => {
       if (response.userId) {
         localStorage.setItem('userId', response.userId);
+        this.userService.getUser(response.userId).subscribe((response: any) => {
+          console.log('user response', response);
+        });
       }
     });
   }
