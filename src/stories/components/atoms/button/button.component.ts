@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'storybook-button',
   template: ` <button
-    type="button"
+    type="{{ type }}"
     (click)="onClick.emit($event)"
     [ngClass]="classes"
     [ngStyle]="{ 'background-color': backgroundColor }"
@@ -24,6 +24,9 @@ export default class ButtonComponent {
    */
   @Input()
   backgroundColor?: string;
+
+  @Input()
+  type?: string;
 
   /**
    * How large should the button be?
@@ -46,7 +49,9 @@ export default class ButtonComponent {
   onClick = new EventEmitter<Event>();
 
   public get classes(): string[] {
-    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+    const mode = this.primary
+      ? 'storybook-button--primary'
+      : 'storybook-button--secondary';
 
     return ['storybook-button', `storybook-button--${this.size}`, mode];
   }

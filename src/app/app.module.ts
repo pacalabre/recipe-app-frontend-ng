@@ -9,7 +9,8 @@ import { ProfileComponent } from './route-components/profile/profile.component';
 import { LoginComponent } from './route-components/login/login.component';
 import { NotFoundComponent } from './route-components/not-found/not-found.component';
 import { RegisterComponent } from './route-components/register/register.component';
-import ButtonComponent from './../stories/button.component';
+import ButtonComponent from '../stories/components/atoms/button/button.component';
+import HeaderComponent from '../stories/components/organisms/header/header.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -22,6 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     NotFoundComponent,
     RegisterComponent,
     ButtonComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -22,8 +22,4 @@ export class LoginComponent {
       }
     });
   }
-
-  logout() {
-    localStorage.removeItem('userId');
-  }
 }

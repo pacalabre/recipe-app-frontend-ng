@@ -1,4 +1,8 @@
-<form #loginForm="ngForm" (ngSubmit)="onLoginSubmit(loginForm)">
+<form
+  class="flex-column"
+  #loginForm="ngForm"
+  (ngSubmit)="onLoginSubmit(loginForm)"
+>
   <h2>Login</h2>
   <label>Email:</label>
   <input type="text" name="email" ngModel />
@@ -6,5 +10,3 @@
   <input type="password" name="password" ngModel />
   <storybook-button label="Register"></storybook-button>
 </form>
-
-<button (click)="logout()">Log Out</button>

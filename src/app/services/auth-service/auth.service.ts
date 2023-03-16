@@ -16,7 +16,9 @@ export class AuthService {
     return this.http.post(`${this.url}/login`, user);
   }
 
-  logout() {}
+  logout() {
+    localStorage.removeItem('userId');
+  }
 
   isAuthenticated() {
     let user = localStorage.getItem('userId');
