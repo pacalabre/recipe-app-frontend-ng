@@ -3,21 +3,32 @@
     "interfaces": [
         {
             "name": "User",
-            "id": "interface-User-9c7e5f1bbbab702cb032307d130876cb68969b0cd4eedef32a0c8cad8081a54e5f8f577ed6ad4539c1b99a1d246cb34031d198c2ea8eba440e64e91b14f01fdc",
-            "file": "src/stories/User.ts",
+            "id": "interface-User-4805399805b1c7f5ce1238f6664af60c7a9b7adfd6687c66f1db2e93d3c22522e07db1bb2276ab55f2a1cf3ae3d757ec30520d28537ed27caa4635f08a99facc",
+            "file": "src/app/models/User.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "export interface User {}\n",
-            "properties": [],
+            "sourceCode": "export interface User {\n  firstName: string;\n}\n",
+            "properties": [
+                {
+                    "name": "firstName",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                }
+            ],
             "indexSignatures": [],
+            "kind": 165,
             "methods": []
         }
     ],
     "injectables": [
         {
             "name": "AuthGuardService",
-            "id": "injectable-AuthGuardService-cf8a2ddb3c96e01d23457fc7a7e3ee7bb14404a9f6f1e2bf72d6e2fa7cd77ea5489820c309cec03f4698568e9d247ca2b71c5443f2398e4c138ea0fc007c8d54",
+            "id": "injectable-AuthGuardService-cff219541c06c763324d1d4902313ec310847ced1605186348d5b20ff5bd88f7db65ec956214a2276b89b02ce9c17cf81d833e38d513bdcdaad0a5b0345b30b5",
             "file": "src/app/services/auth-guard/auth-guard.service.ts",
             "properties": [],
             "methods": [
@@ -36,7 +47,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { CanActivateFn, Router } from '@angular/router';\nimport { AuthService } from '../auth-service/auth.service';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class AuthGuardService {\n  constructor(private authservice: AuthService, private route: Router) {}\n\n  canActivate() {\n    if (this.authservice.isAuthenticated()) {\n      console.log('user is authed');\n      return true;\n    }\n    console.log('user is not authed');\n    this.route.navigate(['login']);\n    return false;\n  }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { CanActivateFn, Router } from '@angular/router';\nimport { AuthService } from '../auth-service/auth.service';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class AuthGuardService {\n  constructor(private authservice: AuthService, private route: Router) {}\n\n  canActivate() {\n    if (this.authservice.isAuthenticated()) {\n      return true;\n    }\n    this.route.navigate(['login']);\n    return false;\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -82,7 +93,7 @@
         },
         {
             "name": "AuthService",
-            "id": "injectable-AuthService-57590c2dfac89cfc136a699b468dd4edbf17a5046c15220e3ccf2747621cd99b096e9aba835d341cda29c4b9837dede0df2560ddf830378e1d3b183eeb725ce8",
+            "id": "injectable-AuthService-c0a66831bd598742768c849d6c4db335cd884150f169b57d769e03ed7ecdd2ee44b245b18d90b5697308b2d5f06d47301e3a05f300a356f14c017ee010848367",
             "file": "src/app/services/auth-service/auth.service.ts",
             "properties": [
                 {
@@ -103,7 +114,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 21,
+                    "line": 23,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -178,7 +189,86 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class AuthService {\n  constructor(private http: HttpClient) {}\n  url: string = `http://localhost:3001/api/auth`;\n\n  registerUser(user: any) {\n    return this.http.post(`${this.url}/register`, user);\n  }\n\n  login(user: any) {\n    return this.http.post(`${this.url}/login`, user);\n  }\n\n  logout() {}\n\n  isAuthenticated() {\n    let user = localStorage.getItem('userId');\n    if (user) {\n      return true;\n    }\n    return false;\n  }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class AuthService {\n  constructor(private http: HttpClient) {}\n  url: string = `http://localhost:3001/api/auth`;\n\n  registerUser(user: any) {\n    return this.http.post(`${this.url}/register`, user);\n  }\n\n  login(user: any) {\n    return this.http.post(`${this.url}/login`, user);\n  }\n\n  logout() {\n    localStorage.removeItem('userId');\n  }\n\n  isAuthenticated() {\n    let user = localStorage.getItem('userId');\n    if (user) {\n      return true;\n    }\n    return false;\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 7,
+                "jsdoctags": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        },
+        {
+            "name": "UsersService",
+            "id": "injectable-UsersService-8c0ca0eaff7c62e08c912f4b0e79ed431a6e631f62763564ff1fcefade1f26a0dae0d37495bffaf40630de65ecab3ff1498b977e5c61745e1022c240cedc5343",
+            "file": "src/app/services/users/users.service.ts",
+            "properties": [
+                {
+                    "name": "url",
+                    "defaultValue": "`http://localhost:3001/api/users`",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getUser",
+                    "args": [
+                        {
+                            "name": "userId",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 10,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "userId",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class UsersService {\n  constructor(private http: HttpClient) {}\n  url: string = `http://localhost:3001/api/users`;\n  getUser(userId: string) {\n    return this.http.get(`${this.url}/${userId}`);\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -209,79 +299,13 @@
         }
     ],
     "guards": [],
-    "interceptors": [
-        {
-            "name": "AuthInterceptor",
-            "id": "injectable-AuthInterceptor-a6b1bfda914086d4b08f8ef6de5c516185619d744923e7cfc1ce24659d41319f5505c81d20583b8394ec3462d8cb8f980c54c0eda53267b8076c83941b5c650b",
-            "file": "src/app/interceptors/auth-interceptor.interceptor.ts",
-            "properties": [],
-            "methods": [
-                {
-                    "name": "intercept",
-                    "args": [
-                        {
-                            "name": "request",
-                            "type": "HttpRequest<>",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        },
-                        {
-                            "name": "next",
-                            "type": "HttpHandler",
-                            "deprecated": false,
-                            "deprecationMessage": ""
-                        }
-                    ],
-                    "optional": false,
-                    "returnType": "Observable<HttpEvent<>>",
-                    "typeParameters": [],
-                    "line": 14,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "jsdoctags": [
-                        {
-                            "name": "request",
-                            "type": "HttpRequest<>",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        },
-                        {
-                            "name": "next",
-                            "type": "HttpHandler",
-                            "deprecated": false,
-                            "deprecationMessage": "",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                }
-            ],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "description": "",
-            "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport {\n  HttpRequest,\n  HttpHandler,\n  HttpEvent,\n  HttpInterceptor,\n} from '@angular/common/http';\nimport { Observable } from 'rxjs';\n\n@Injectable()\nexport class AuthInterceptor implements HttpInterceptor {\n  constructor() {}\n\n  intercept(\n    request: HttpRequest<unknown>,\n    next: HttpHandler\n  ): Observable<HttpEvent<unknown>> {\n    return next.handle(request);\n  }\n}\n",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [],
-                "line": 11
-            },
-            "type": "interceptor"
-        }
-    ],
+    "interceptors": [],
     "classes": [],
     "directives": [],
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-b2645a55ebd03bcb246daab5b5b62bc46af3694dba6a98283f06233841387e1371233b3be702894404cd2b2755a1e7d849970da3be62fd367c51752b27bf42be",
+            "id": "component-AppComponent-b233ed2d4c037d7fb93470a2ba5f1c47ff4f691557638103c699444837a7b13e9ecf812bf963b53de5a7b0d5e60cbbba010331d3661d00bad207c435fee4e9bb",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -308,10 +332,31 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 9
+                    "line": 12
+                },
+                {
+                    "name": "user",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 13
                 }
             ],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "logout",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 25,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
@@ -319,7 +364,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.css']\n})\nexport class AppComponent {\n  title = 'recipe-app-frontend-ng';\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { User } from './models/User';\nimport { AuthService } from './services/auth-service/auth.service';\nimport { Store } from '@ngrx/store';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.css'],\n})\nexport class AppComponent {\n  title = 'recipe-app-frontend-ng';\n  user: any = null;\n\n  constructor(\n    private authService: AuthService,\n    private readonly store: Store<any>\n  ) {\n    this.store.subscribe((state: any) => {\n      const store = state;\n      this.user = store.appState.user;\n    });\n  }\n\n  logout() {\n    this.authService.logout();\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -328,12 +373,53 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<nav>\n  <p><a routerLink=\"\">Home</a></p>\n  <p><a routerLink=\"/login\">Login</a></p>\n  <p><a routerLink=\"/register\">Register</a></p>\n  <p><a routerLink=\"/profile\">Profile</a></p>\n</nav>\n<router-outlet></router-outlet>\n"
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "authService",
+                        "type": "AuthService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<any>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 13,
+                "jsdoctags": [
+                    {
+                        "name": "authService",
+                        "type": "AuthService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<any>",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "templateData": "<storybook-header [user]=\"user\" (onLogout)=\"logout()\"></storybook-header>\n<router-outlet></router-outlet>\n"
         },
         {
             "name": "ButtonComponent",
             "id": "component-ButtonComponent-aee281d9b3946c64d82278ce12cb67bc08b357da167691e41e44347ab4e1a5fb12b29f40f999069a25c64402543ad42bd2dc5aa05f37d9b3ebe899aeba6d9d20",
-            "file": "src/stories/button.component.ts",
+            "file": "src/stories/components/atoms/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -464,8 +550,8 @@
         },
         {
             "name": "HeaderComponent",
-            "id": "component-HeaderComponent-a557eec14f72c438a8033301f4d6ce023e0a1844a3b06ec2b38794a612acc31735ae78a5ee10071b230c8c20d699eb914554e69d07ade54adb371da8efb464cc",
-            "file": "src/stories/header.component.ts",
+            "id": "component-HeaderComponent-2770e398f080414958420307b928a9de397e687fae64b6c56d8c267227012c3253ac4a96542dd5460955029ba91aeb9db6beb153d6e94ee31fd98362a9ee82f6",
+            "file": "src/stories/components/organisms/header/header.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -476,16 +562,26 @@
                 "./header.css"
             ],
             "styles": [],
-            "template": "<header>    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <div *ngIf=\"user\">\n          <span class=\"welcome\">\n            Welcome, <b>{{ user.name }}</b\n            >!\n          </span>\n          <storybook-button\n            *ngIf=\"user\"\n            size=\"small\"\n            (onClick)=\"onLogout.emit($event)\"\n            label=\"Log out\"\n          ></storybook-button>\n        </div>\n        <div *ngIf=\"!user\">\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            class=\"margin-left\"\n            (onClick)=\"onLogin.emit($event)\"\n            label=\"Log in\"\n          ></storybook-button>\n          <storybook-button\n            *ngIf=\"!user\"\n            primary\n            size=\"small\"\n            primary=\"true\"\n            class=\"margin-left\"\n            (onClick)=\"onCreateAccount.emit($event)\"\n            label=\"Sign up\"\n          ></storybook-button>\n        </div>\n      </div>\n    </div>\n  </header>",
-            "templateUrl": [],
+            "templateUrl": [
+                "./header.component.html"
+            ],
             "viewProviders": [],
             "inputsClass": [
+                {
+                    "name": "links",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 14,
+                    "type": "any[] | null",
+                    "decorators": []
+                },
                 {
                     "name": "user",
                     "defaultValue": "null",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 65,
+                    "line": 11,
                     "type": "User | null",
                     "decorators": []
                 }
@@ -496,7 +592,7 @@
                     "defaultValue": "new EventEmitter<Event>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 74,
+                    "line": 23,
                     "type": "EventEmitter"
                 },
                 {
@@ -504,7 +600,7 @@
                     "defaultValue": "new EventEmitter<Event>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 68,
+                    "line": 17,
                     "type": "EventEmitter"
                 },
                 {
@@ -512,7 +608,7 @@
                     "defaultValue": "new EventEmitter<Event>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 71,
+                    "line": 20,
                     "type": "EventEmitter"
                 }
             ],
@@ -525,15 +621,16 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { User } from './User';\n\n@Component({\n  selector: 'storybook-header',\n  template: `<header>\n    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <div *ngIf=\"user\">\n          <span class=\"welcome\">\n            Welcome, <b>{{ user.name }}</b\n            >!\n          </span>\n          <storybook-button\n            *ngIf=\"user\"\n            size=\"small\"\n            (onClick)=\"onLogout.emit($event)\"\n            label=\"Log out\"\n          ></storybook-button>\n        </div>\n        <div *ngIf=\"!user\">\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            class=\"margin-left\"\n            (onClick)=\"onLogin.emit($event)\"\n            label=\"Log in\"\n          ></storybook-button>\n          <storybook-button\n            *ngIf=\"!user\"\n            primary\n            size=\"small\"\n            primary=\"true\"\n            class=\"margin-left\"\n            (onClick)=\"onCreateAccount.emit($event)\"\n            label=\"Sign up\"\n          ></storybook-button>\n        </div>\n      </div>\n    </div>\n  </header>`,\n  styleUrls: ['./header.css'],\n})\nexport default class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { User } from '../../../../app/models/User';\n\n@Component({\n  selector: 'storybook-header',\n  templateUrl: './header.component.html',\n  styleUrls: ['./header.css'],\n})\nexport default class HeaderComponent {\n  @Input()\n  user: User | null = null;\n\n  @Input()\n  links: any[] | null = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".wrapper {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\nsvg {\n  display: inline-block;\n  vertical-align: top;\n}\n\nh1 {\n  font-weight: 900;\n  font-size: 20px;\n  line-height: 1;\n  margin: 6px 0 6px 10px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nbutton + button {\n  margin-left: 10px;\n}\n\n.welcome {\n  color: #333;\n  font-size: 14px;\n  margin-right: 10px;\n}\n",
+                    "data": ".wrapper {\n  font-family: \"Nunito Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\nsvg {\n  display: inline-block;\n  vertical-align: top;\n}\n\nh1 {\n  font-weight: 900;\n  font-size: 20px;\n  line-height: 1;\n  margin: 6px 0 6px 10px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nbutton + button {\n  margin-left: 10px;\n}\n\n.header__navlink {\n  padding: 0 5px;\n  text-decoration: none;\n  color: black;\n}\n\n.welcome {\n  color: #333;\n  font-size: 14px;\n  margin-right: 10px;\n}\n",
                     "styleUrl": "./header.css"
                 }
             ],
-            "stylesData": ""
+            "stylesData": "",
+            "templateData": "<header>\n  <div class=\"wrapper\">\n    <a routerLink=\"\">\n      <div>\n        <svg\n          width=\"32\"\n          height=\"32\"\n          viewBox=\"0 0 32 32\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Caladine</h1>\n      </div>\n    </a>\n    <div class=\"flex-row flex-align\">\n      <div *ngIf=\"user\">\n        <span class=\"welcome\">\n          Welcome, <b>{{ user.firstName }}</b\n          >!\n        </span>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n      <div *ngIf=\"!user\">\n        <a class=\"header__navlink\" routerLink=\"/login\">Login</a>\n        <a class=\"header__navlink\" routerLink=\"/register\">Register</a>\n        <!-- if logged in-->\n        <a class=\"header__navlink\" routerLink=\"/profile\">Profile</a>\n        <storybook-button\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n      </div>\n    </div>\n  </div>\n</header>\n"
         },
         {
             "name": "HomeComponent",
@@ -577,7 +674,7 @@
         },
         {
             "name": "LoginComponent",
-            "id": "component-LoginComponent-4552d643358748454c63a4a6465a6bf1b1b4cda6a75f1bffb401e1dff4f4552b203f137d5634a4dde1168a5a19c74553c1526c2194e905570f25e360b9b5b4ee",
+            "id": "component-LoginComponent-2aac6da082cd6faec485241b0b6866ca90eac7c8a021c18bfb660408039312d3f597cd2ce4be10c16f801df82fb27099de97f493fa533a6a5ce0eb8789ddffc8",
             "file": "src/app/route-components/login/login.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -603,20 +700,10 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 11
+                    "line": 14
                 }
             ],
             "methodsClass": [
-                {
-                    "name": "logout",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 26,
-                    "deprecated": false,
-                    "deprecationMessage": ""
-                },
                 {
                     "name": "onLoginSubmit",
                     "args": [
@@ -630,7 +717,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 14,
+                    "line": 21,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -653,7 +740,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { NgForm } from '@angular/forms';\nimport { AuthService } from 'src/app/services/auth-service/auth.service';\n\n@Component({\n  selector: 'app-login',\n  templateUrl: './login.component.html',\n  styleUrls: ['./login.component.css'],\n})\nexport class LoginComponent {\n  currentUser: any;\n  constructor(private authService: AuthService) {}\n\n  onLoginSubmit(form: NgForm) {\n    const user = {\n      email: form.value.email,\n      password: form.value.password,\n    };\n    this.authService.login(user).subscribe((response: any) => {\n      if (response.userId) {\n        localStorage.setItem('userId', response.userId);\n      }\n    });\n  }\n\n  logout() {\n    localStorage.removeItem('userId');\n  }\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { NgForm } from '@angular/forms';\nimport { Store } from '@ngrx/store';\nimport { AuthService } from 'src/app/services/auth-service/auth.service';\nimport { UsersService } from 'src/app/services/users/users.service';\nimport * as Actions from '../../store/actions';\n\n@Component({\n  selector: 'app-login',\n  templateUrl: './login.component.html',\n  styleUrls: ['./login.component.css'],\n})\nexport class LoginComponent {\n  currentUser: any;\n  constructor(\n    private authService: AuthService,\n    private userService: UsersService,\n    private readonly store: Store\n  ) {}\n\n  onLoginSubmit(form: NgForm) {\n    const user = {\n      email: form.value.email,\n      password: form.value.password,\n    };\n    this.authService.login(user).subscribe((response: any) => {\n      if (response.userId) {\n        localStorage.setItem('userId', response.userId);\n        this.userService.getUser(response.userId).subscribe((response: any) => {\n          console.log('user response', response);\n          this.store.dispatch(Actions.logInUser({ user: response }));\n        });\n      }\n    });\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -673,9 +760,21 @@
                         "type": "AuthService",
                         "deprecated": false,
                         "deprecationMessage": ""
+                    },
+                    {
+                        "name": "userService",
+                        "type": "UsersService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
-                "line": 11,
+                "line": 14,
                 "jsdoctags": [
                     {
                         "name": "authService",
@@ -685,10 +784,28 @@
                         "tagName": {
                             "text": "param"
                         }
+                    },
+                    {
+                        "name": "userService",
+                        "type": "UsersService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
                     }
                 ]
             },
-            "templateData": "<form #loginForm=\"ngForm\" (ngSubmit)=\"onLoginSubmit(loginForm)\">\n  <h2>Login</h2>\n  <label>Email:</label>\n  <input type=\"text\" name=\"email\" ngModel />\n  <label>Password</label>\n  <input type=\"password\" name=\"password\" ngModel />\n  <storybook-button label=\"Register\"></storybook-button>\n</form>\n\n<button (click)=\"logout()\">Log Out</button>\n"
+            "templateData": "<form\n  class=\"flex-column\"\n  #loginForm=\"ngForm\"\n  (ngSubmit)=\"onLoginSubmit(loginForm)\"\n>\n  <h2>Login</h2>\n  <label>Email:</label>\n  <input type=\"text\" name=\"email\" ngModel />\n  <label>Password</label>\n  <input type=\"password\" name=\"password\" ngModel />\n  <storybook-button label=\"Register\"></storybook-button>\n</form>\n"
         },
         {
             "name": "NotFoundComponent",
@@ -732,7 +849,7 @@
         },
         {
             "name": "PageComponent",
-            "id": "component-PageComponent-7126d8c2607c946741c651482413b43feb72b2d63cac9d3ac173fde206a5e635eb4cdbf7ca7ac9327c7d4d05cf7ef619144c34c11609ad677081d0ee4e855064",
+            "id": "component-PageComponent-6cc859b3362f403afe6dcd6a04abe6bd5accf110695829942caf3f57dab40062d38de0e4bae666ac99ec7cc43449f483c8ea9dc6a9f4bc2275e7ac4e00e08bdf",
             "file": "src/stories/page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -744,7 +861,7 @@
                 "./page.css"
             ],
             "styles": [],
-            "template": "<article>    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page states without\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\n        in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose such data from the\n          \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock these services out\n          using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a href=\"https://storybook.js.org/tutorials/\" target=\"_blank\" rel=\"noopener noreferrer\">\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\"> docs </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>",
+            "template": "<article>    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a\n          href=\"https://componentdriven.org\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page\n        states without needing to navigate to them in your app. Here are some\n        handy patterns for managing page data in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose\n          such data from the \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock\n          these services out using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a\n          href=\"https://storybook.js.org/tutorials/\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a\n          href=\"https://storybook.js.org/docs\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          docs\n        </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg\n          width=\"10\"\n          height=\"10\"\n          viewBox=\"0 0 12 12\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
@@ -758,7 +875,7 @@
                     "type": "User | null",
                     "optional": false,
                     "description": "",
-                    "line": 64
+                    "line": 83
                 }
             ],
             "methodsClass": [
@@ -768,7 +885,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 74,
+                    "line": 93,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -778,7 +895,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 70,
+                    "line": 89,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -788,7 +905,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 66,
+                    "line": 85,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -800,7 +917,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { User } from './User';\n\n@Component({\n  selector: 'storybook-page',\n  template: `<article>\n    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page states without\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\n        in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose such data from the\n          \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock these services out\n          using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a href=\"https://storybook.js.org/tutorials/\" target=\"_blank\" rel=\"noopener noreferrer\">\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\"> docs </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>`,\n  styleUrls: ['./page.css'],\n})\nexport default class PageComponent {\n  user: User | null = null;\n\n  doLogout() {\n    this.user = null;\n  }\n\n  doLogin() {\n    this.user = { name: 'Jane Doe' };\n  }\n\n  doCreateAccount() {\n    this.user = { name: 'Jane Doe' };\n  }\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { User } from '../app/models/User';\n\n@Component({\n  selector: 'storybook-page',\n  template: `<article>\n    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a\n          href=\"https://componentdriven.org\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page\n        states without needing to navigate to them in your app. Here are some\n        handy patterns for managing page data in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose\n          such data from the \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock\n          these services out using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a\n          href=\"https://storybook.js.org/tutorials/\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a\n          href=\"https://storybook.js.org/docs\"\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          docs\n        </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg\n          width=\"10\"\n          height=\"10\"\n          viewBox=\"0 0 12 12\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n        >\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>`,\n  styleUrls: ['./page.css'],\n})\nexport default class PageComponent {\n  user: User | null = null;\n\n  doLogout() {\n    this.user = null;\n  }\n\n  doLogin() {\n    this.user = { firstName: 'Jane Doe' };\n  }\n\n  doCreateAccount() {\n    this.user = { firstName: 'Jane Doe' };\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -958,19 +1075,19 @@
                     }
                 ]
             },
-            "templateData": "<form\n  (ngSubmit)=\"onRegisterSubmit($event, registerForm)\"\n  #registerForm=\"ngForm\"\n>\n  <h2>Register</h2>\n  <label>First Name:</label>\n  <input type=\"text\" name=\"firstName\" ngModel #formUsername=\"ngModel\" />\n  <label>Last Name:</label>\n  <input type=\"text\" name=\"lastName\" ngModel #formUsername=\"ngModel\" />\n  <label>Username:</label>\n  <input type=\"text\" name=\"userName\" ngModel #formUsername=\"ngModel\" />\n  <label>Email:</label>\n  <input type=\"text\" name=\"email\" ngModel #formUsername=\"ngModel\" />\n  <label>Password</label>\n  <input type=\"password\" name=\"password\" ngModel />\n  <storybook-button type=\"submit\" label=\"Register\"></storybook-button>\n</form>\n"
+            "templateData": "<form\n  class=\"flex-column\"\n  (ngSubmit)=\"onRegisterSubmit($event, registerForm)\"\n  #registerForm=\"ngForm\"\n>\n  <h2>Register</h2>\n  <label>First Name:</label>\n  <input type=\"text\" name=\"firstName\" ngModel #formUsername=\"ngModel\" />\n  <label>Last Name:</label>\n  <input type=\"text\" name=\"lastName\" ngModel #formUsername=\"ngModel\" />\n  <label>Username:</label>\n  <input type=\"text\" name=\"userName\" ngModel #formUsername=\"ngModel\" />\n  <label>Email:</label>\n  <input type=\"text\" name=\"email\" ngModel #formUsername=\"ngModel\" />\n  <label>Password</label>\n  <input type=\"password\" name=\"password\" ngModel />\n  <storybook-button type=\"submit\" label=\"Register\"></storybook-button>\n</form>\n"
         }
     ],
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-bcae6dbf328706cca929c76fa63bfd0080554382e08bac28fed8bb188a7c39f63fa0c9db0aadae5089f9c721b134614761f3b1534fd958d7a213353b9a4628a5",
+            "id": "module-AppModule-d823dc12f007c365008a73c3f957b8b81aca359b45bd6b1b172fe455fe15f710b73578428544796848ef1ca69c298b7e3963b35f5c73603fa5574d8db6db0c3a",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { isDevMode, NgModule } from '@angular/core';\nimport { HttpClientModule } from '@angular/common/http';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { FormsModule } from '@angular/forms';\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { HomeComponent } from './route-components/home/home.component';\nimport { ProfileComponent } from './route-components/profile/profile.component';\nimport { LoginComponent } from './route-components/login/login.component';\nimport { NotFoundComponent } from './route-components/not-found/not-found.component';\nimport { RegisterComponent } from './route-components/register/register.component';\nimport ButtonComponent from './../stories/button.component';\nimport { StoreModule } from '@ngrx/store';\nimport { StoreDevtoolsModule } from '@ngrx/store-devtools';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    HomeComponent,\n    ProfileComponent,\n    LoginComponent,\n    NotFoundComponent,\n    RegisterComponent,\n    ButtonComponent,\n  ],\n  imports: [\n    BrowserModule,\n    HttpClientModule,\n    AppRoutingModule,\n    FormsModule,\n    StoreModule.forRoot({}, {}),\n    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode }),\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
+            "sourceCode": "import { isDevMode, NgModule } from '@angular/core';\nimport { HttpClientModule } from '@angular/common/http';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { FormsModule } from '@angular/forms';\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { HomeComponent } from './route-components/home/home.component';\nimport { ProfileComponent } from './route-components/profile/profile.component';\nimport { LoginComponent } from './route-components/login/login.component';\nimport { NotFoundComponent } from './route-components/not-found/not-found.component';\nimport { RegisterComponent } from './route-components/register/register.component';\nimport ButtonComponent from '../stories/components/atoms/button/button.component';\nimport HeaderComponent from '../stories/components/organisms/header/header.component';\nimport { StoreModule } from '@ngrx/store';\nimport { StoreDevtoolsModule } from '@ngrx/store-devtools';\nimport { reducers } from './store/reducer';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    HomeComponent,\n    ProfileComponent,\n    LoginComponent,\n    NotFoundComponent,\n    RegisterComponent,\n    ButtonComponent,\n    HeaderComponent,\n  ],\n  imports: [\n    BrowserModule,\n    HttpClientModule,\n    AppRoutingModule,\n    FormsModule,\n    StoreModule.forRoot(\n      {\n        appState: reducers,\n      },\n      {}\n    ),\n    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode }),\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -984,6 +1101,9 @@
                         },
                         {
                             "name": "ButtonComponent"
+                        },
+                        {
+                            "name": "HeaderComponent"
                         },
                         {
                             "name": "HomeComponent"
@@ -1068,20 +1188,20 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "initalState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\n  user: {},\n}"
+            },
+            {
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "LoggedIn",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
+                "file": "src/stories/components/atoms/button/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -1098,10 +1218,10 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "LoggedOut",
+                "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
+                "file": "src/stories/components/organisms/header/Header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -1116,22 +1236,52 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "LoggedOut",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/components/organisms/header/Header.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "logInUser",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(\n  '[Login Form] Login User',\n  // user will be of IUsers\n  props<{ user: any }>()\n)"
             },
             {
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/stories/components/atoms/button/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "reducers",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createReducer(\n  initalState,\n  on(Actions.logInUser, (_state, payload) => ({\n    user: payload.user,\n  }))\n)"
+            },
+            {
                 "name": "Secondary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/stories/components/atoms/button/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -1141,31 +1291,11 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/stories/components/atoms/button/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<Button>",
-                "defaultValue": "(args: Button) => ({\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<Header>",
-                "defaultValue": "(args: Header) => ({\n  props: args,\n})"
             },
             {
                 "name": "Template",
@@ -1176,18 +1306,60 @@
                 "deprecationMessage": "",
                 "type": "Story<Page>",
                 "defaultValue": "(args: Page) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/components/atoms/button/Button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<Button>",
+                "defaultValue": "(args: Button) => ({\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/components/organisms/header/Header.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<Header>",
+                "defaultValue": "(args: Header) => ({\n  props: args,\n})"
             }
         ],
         "functions": [],
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
-            "src/stories/Button.stories.ts": [
+            "src/app/store/reducer.ts": [
+                {
+                    "name": "initalState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\n  user: {},\n}"
+                },
+                {
+                    "name": "reducers",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createReducer(\n  initalState,\n  on(Actions.logInUser, (_state, payload) => ({\n    user: payload.user,\n  }))\n)"
+                }
+            ],
+            "src/stories/components/atoms/button/Button.stories.ts": [
                 {
                     "name": "Large",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/stories/components/atoms/button/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -1197,7 +1369,7 @@
                     "name": "Primary",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/stories/components/atoms/button/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -1207,7 +1379,7 @@
                     "name": "Secondary",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/stories/components/atoms/button/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -1217,7 +1389,7 @@
                     "name": "Small",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/stories/components/atoms/button/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -1227,43 +1399,11 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/stories/components/atoms/button/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<Button>",
                     "defaultValue": "(args: Button) => ({\n  props: args,\n})"
-                }
-            ],
-            "src/stories/Header.stories.ts": [
-                {
-                    "name": "LoggedIn",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "LoggedOut",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<Header>",
-                    "defaultValue": "(args: Header) => ({\n  props: args,\n})"
                 }
             ],
             "src/stories/Page.stories.ts": [
@@ -1296,6 +1436,50 @@
                     "deprecationMessage": "",
                     "type": "Story<Page>",
                     "defaultValue": "(args: Page) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/stories/components/organisms/header/Header.stories.ts": [
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/components/organisms/header/Header.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/components/organisms/header/Header.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/components/organisms/header/Header.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<Header>",
+                    "defaultValue": "(args: Header) => ({\n  props: args,\n})"
+                }
+            ],
+            "src/app/store/actions.ts": [
+                {
+                    "name": "logInUser",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/actions.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(\n  '[Login Form] Login User',\n  // user will be of IUsers\n  props<{ user: any }>()\n)"
                 }
             ]
         },
@@ -1351,16 +1535,16 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {
-                "filePath": "src/app/interceptors/auth-interceptor.interceptor.ts",
-                "type": "interceptor",
-                "linktype": "interceptor",
-                "name": "AuthInterceptor",
+                "filePath": "src/app/models/User.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "User",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/2",
                 "status": "low"
             },
             {
@@ -1378,7 +1562,7 @@
                 "linktype": "component",
                 "name": "LoginComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/5",
+                "coverageCount": "0/4",
                 "status": "low"
             },
             {
@@ -1427,7 +1611,76 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button.stories.ts",
+                "filePath": "src/app/services/users/users.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "UsersService",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "logInUser",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "initalState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "reducers",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/components/atoms/button/Button.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1437,7 +1690,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button.stories.ts",
+                "filePath": "src/stories/components/atoms/button/Button.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1447,7 +1700,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button.stories.ts",
+                "filePath": "src/stories/components/atoms/button/Button.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1457,7 +1710,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button.stories.ts",
+                "filePath": "src/stories/components/atoms/button/Button.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1467,7 +1720,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button.stories.ts",
+                "filePath": "src/stories/components/atoms/button/Button.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1477,76 +1730,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedIn",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedOut",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedIn",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedOut",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/User.ts",
-                "type": "interface",
-                "linktype": "interface",
-                "name": "User",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/button.component.ts",
+                "filePath": "src/stories/components/atoms/button/button.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "ButtonComponent",
@@ -1555,12 +1739,42 @@
                 "status": "good"
             },
             {
-                "filePath": "src/stories/header.component.ts",
+                "filePath": "src/stories/components/organisms/header/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/components/organisms/header/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/components/organisms/header/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/components/organisms/header/header.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "HeaderComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/5",
+                "coverageCount": "0/6",
                 "status": "low"
             },
             {

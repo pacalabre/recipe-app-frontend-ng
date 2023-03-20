@@ -13,6 +13,7 @@ import ButtonComponent from '../stories/components/atoms/button/button.component
 import HeaderComponent from '../stories/components/organisms/header/header.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './store/reducer';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(
+      {
+        appState: reducers,
+      },
+      {}
+    ),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode }),
   ],
   providers: [],

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { UsersService } from 'src/app/services/users/users.service';
+import * as Actions from '../../store/actions';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,8 @@ export class LoginComponent {
   currentUser: any;
   constructor(
     private authService: AuthService,
-    private userService: UsersService
+    private userService: UsersService,
+    private readonly store: Store
   ) {}
 
   onLoginSubmit(form: NgForm) {
@@ -24,7 +27,7 @@ export class LoginComponent {
       if (response.userId) {
         localStorage.setItem('userId', response.userId);
         this.userService.getUser(response.userId).subscribe((response: any) => {
-          console.log('user response', response);
+          this.store.dispatch(Actions.updateUser({ user: response }));
         });
       }
     });

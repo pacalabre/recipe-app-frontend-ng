@@ -29,9 +29,10 @@
     <div class="flex-row flex-align">
       <div *ngIf="user">
         <span class="welcome">
-          Welcome, <b>{{ user.name }}</b
+          Welcome, <b>{{ user.firstName }}</b
           >!
         </span>
+        <a class="header__navlink" routerLink="/profile">Profile</a>
         <storybook-button
           *ngIf="user"
           size="small"
@@ -42,13 +43,6 @@
       <div *ngIf="!user">
         <a class="header__navlink" routerLink="/login">Login</a>
         <a class="header__navlink" routerLink="/register">Register</a>
-        <!-- if logged in-->
-        <a class="header__navlink" routerLink="/profile">Profile</a>
-        <storybook-button
-          size="small"
-          (onClick)="onLogout.emit($event)"
-          label="Log out"
-        ></storybook-button>
       </div>
     </div>
   </div>

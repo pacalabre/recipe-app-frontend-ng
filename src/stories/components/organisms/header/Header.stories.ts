@@ -27,7 +27,7 @@ const Template: Story<Header> = (args: Header) => ({
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
   user: {
-    name: 'Jane Doe',
+    firstName: 'Jane Doe',
   },
 };
 
