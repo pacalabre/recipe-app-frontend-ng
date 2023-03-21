@@ -1,1 +1,24 @@
 <p>profile works!</p>
+<h2>Profile Info</h2>
+<p>Name: {{ user.firstName }} {{ user.lastName }}</p>
+<p>Username: {{ user.userName }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Date Created {{ user.dateCreated }}</p>
+<p>Recipes:</p>
+<div *ngIf="user.savedRecipes.length === 0" else showRecipes>
+  <p>You currently do not have any recipes posted.</p>
+</div>
+<ng-template #showRecipes>
+  <ul>
+    <li>This is where the Recipes will go</li>
+  </ul>
+</ng-template>
+<p>Tags:</p>
+<div *ngIf="user.tagsUsed.length === 0" else showTags>
+  <p>You currently do not have any tags used.</p>
+</div>
+<ng-template #showTags>
+  <ul>
+    <li>This is where the tags will go.</li>
+  </ul>
+</ng-template>
