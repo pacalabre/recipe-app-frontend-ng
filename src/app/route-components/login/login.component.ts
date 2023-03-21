@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import * as Actions from '../../store/actions';
@@ -15,6 +16,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private userService: UsersService,
+    private route: Router,
     private readonly store: Store
   ) {}
 
@@ -28,6 +30,7 @@ export class LoginComponent {
         localStorage.setItem('userId', response.userId);
         this.userService.getUser(response.userId).subscribe((response: any) => {
           this.store.dispatch(Actions.updateUser({ user: response }));
+          this.route.navigate(['profile']);
         });
       }
     });

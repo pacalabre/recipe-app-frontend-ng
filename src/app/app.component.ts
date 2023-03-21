@@ -3,6 +3,7 @@ import { AuthService } from './services/auth-service/auth.service';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import * as Actions from '../app/store/actions';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +26,20 @@ export class AppComponent {
   }
 
   logout() {
-    this.authService.logout();
-    this.store.dispatch(Actions.updateUser({ user: null }));
-    this.route.navigate(['login']);
+    this.authService
+      .logout()
+      .pipe(
+        catchError((error) => {
+          console.log('Handling error locally and rethrowing it...', error);
+          return throwError(() => error);
+        })
+      )
+      .subscribe((response) => {
+        if (response) {
+          localStorage.removeItem('userId');
+          this.store.dispatch(Actions.updateUser({ user: null }));
+          this.route.navigate(['login']);
+        }
+      });
   }
 }

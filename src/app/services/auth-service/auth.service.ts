@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('userId');
+    return this.http.post(`${this.url}/logout`, {});
   }
 
   isAuthenticated() {
