@@ -22,3 +22,24 @@
     <li>This is where the tags will go.</li>
   </ul>
 </ng-template>
+
+<form
+  class="flex-column"
+  #addRecipeForm="ngForm"
+  (ngSubmit)="onAddRecipeSubmit(addRecipeForm)"
+>
+  <h2>Recipe</h2>
+  <label>Name</label>
+  <input type="text" name="name" ngModel />
+  <label>Short Description</label>
+  <input type="text" name="shortDescription" ngModel />
+  <label>Link to Recipe</label>
+  <input type="text" name="recipeLink" ngModel />
+  <label>Ease of Making</label>
+  <input type="number" name="easeOfMaking" ngModel />
+  <label>Description</label>
+  <textarea type="text" name="description" ngModel></textarea>
+  <storybook-button label="Submit Recipe"></storybook-button>
+</form>
+
+<button (click)="getRecipes()">Get Recipes</button>
