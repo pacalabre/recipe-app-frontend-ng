@@ -45,6 +45,7 @@ export class ProfileComponent {
     console.log(recipe);
     this.recipeService.postRecipe(recipe).subscribe((response) => {
       console.log('posting recipe', response);
+      recipeForm.reset();
     });
   }
 }
